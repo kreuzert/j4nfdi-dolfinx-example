@@ -1,7 +1,10 @@
 FROM quay.io/jupyter/base-notebook:notebook-7.4.3
 
-# Install required system packages using apt (base-notebook is Debian-based)
+COPY . ${HOME}
 USER root
+RUN chown -R ${NB_UID} ${HOME}
+
+# Install required system packages using apt (base-notebook is Debian-based)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && apt-get clean \
@@ -10,10 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Switch back to the default user
 USER ${NB_UID}
 
-# Copy conda environment and install it
-COPY binder/environment.yml /tmp/environment.yml
-
-RUN mamba env create -f /tmp/environment.yml && \
+RUN mamba env create -f binder/environment.yml && \
     conda clean --all -f -y && \
     echo "conda activate fenicsx-env" >> ~/.bashrc
 
