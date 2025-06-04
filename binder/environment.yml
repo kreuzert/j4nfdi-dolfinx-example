@@ -2,7 +2,11 @@ name: fenicsx-env
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
-  - fenics-dolfinx
+  - python=3.10
+  - fenics-dolfinx=0.6.0
   - mpich
-  - pyvista
+  - pyvista[all]
+  - scipy
+  - pip
+pip:
+  - trame_jupyter_extension
