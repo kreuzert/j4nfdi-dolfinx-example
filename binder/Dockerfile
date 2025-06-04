@@ -20,3 +20,7 @@ RUN mamba env create -f binder/environment.yml && \
 # Set default environment
 ENV CONDA_DEFAULT_ENV=fenicsx-env
 ENV PATH=/opt/conda/envs/fenicsx-env/bin:$PATH
+
+# Ensure Jupyter picks up correct Python/kernel
+RUN pip install ipykernel
+RUN conda run -n fenicsx-env python -m ipykernel install --user --name=fenicsx-env --display-name "Python (fenicsx-env)"
